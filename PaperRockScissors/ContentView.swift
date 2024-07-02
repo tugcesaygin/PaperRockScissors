@@ -8,32 +8,52 @@
 import SwiftUI
 
 
-struct ButtonView : ViewModifier{
-    func body(content: Content) -> some View {
-        content
-            .frame(maxWidth: .infinity)
-         
-            
-            
-    }
-}
-
-extension View{
-    func buttonView() -> some View{
-        self.modifier(ButtonView())
-    }
-}
 
 struct ContentView: View {
     
     @State private var moves = ["paper","rock","scissors"]
     
-    @State private var appsChoice = Bool.random()
+    @State private var appsChoice = Int.random(in: 0...2)
     
-    @State private var usersSituation = false
+    @State private var scorePoints = 0
     
+    @State private var appsChoiceText = "BAŞLA"
+
     
-    
+    func clickMove(_ number : Int){
+        appsChoice = Int.random(in: 0...2) // Yeni seçim yapılıyor
+        appsChoiceText = moves[appsChoice] // Metni güncelle
+        
+        if number == 0{
+            if appsChoice == 0{
+                scorePoints = 0
+                
+            }else if appsChoice == 1{
+                scorePoints += 1
+            }else{
+                scorePoints = 0
+            }
+            
+        }else if number == 1{
+            if appsChoice == 0{
+                scorePoints += 0
+            }else if appsChoice == 1{
+                scorePoints = 0
+            }else{
+                scorePoints += 1
+            }
+        }else if number == 2{
+                if appsChoice == 0{
+                    scorePoints += 1
+                }else if appsChoice == 1 {
+                    scorePoints = 0
+                }else{
+                    scorePoints = 0
+                }
+            }
+ 
+        }
+
     var body: some View{
        
         ZStack{
@@ -42,16 +62,17 @@ struct ContentView: View {
                 .ignoresSafeArea()
                 
             
-            VStack{
+            VStack(spacing : 40){
                 
-                
-                Spacer()
-                
+                Text("\(appsChoiceText)")
+                    .font(.title.bold())
+                    .foregroundColor(.white)
+
                 
                 VStack{
-                        
                         ForEach(0..<3){ number in
-                            Button{
+                            Button(){
+                                clickMove(number)
                                 
                             }label: {
                                 Image(moves[number])
@@ -64,22 +85,15 @@ struct ContentView: View {
                         }
                     }
                 
-               
-                Spacer()
-                
-                
                 VStack{
-                    Text("Your Score")
+                    Text("Your Score : \(scorePoints)")
+                    
                 }
-                
+        
             }
-            
-            
-           
+     
         }
- 
-        
-        
+
     }
         
 }

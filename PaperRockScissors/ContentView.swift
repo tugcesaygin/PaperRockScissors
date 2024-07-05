@@ -21,6 +21,7 @@ struct ContentView: View {
 
     
     func clickMove(_ number : Int){
+        
         appsChoice = Int.random(in: 0...2) // Yeni seçim yapılıyor
         appsChoiceText = moves[appsChoice] // Metni güncelle
         
@@ -62,12 +63,15 @@ struct ContentView: View {
                 .ignoresSafeArea()
                 
             
+           
+            
             VStack(spacing : 40){
                 
                 Text("\(appsChoiceText)")
                     .font(.title.bold())
                     .foregroundColor(.white)
 
+            
                 
                 VStack{
                         ForEach(0..<3){ number in
@@ -77,7 +81,7 @@ struct ContentView: View {
                             }label: {
                                 Image(moves[number])
                                     .resizable()
-                                    .frame(width:150,height:150)
+                                    .frame(width:170,height:170)
                             }
                             .clipShape(.rect(cornerRadius: 20))
                             
@@ -87,6 +91,8 @@ struct ContentView: View {
                 
                 VStack{
                     Text("Your Score : \(scorePoints)")
+                        .font(.headline.bold())
+                        .foregroundStyle(.white)
                     
                 }
         
